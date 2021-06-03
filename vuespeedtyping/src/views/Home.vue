@@ -22,7 +22,7 @@
 
             <v-card-actions >
               <v-spacer/>
-              <v-btn rounded color="grey darken-3" class="fadeIn fourth" >Login</v-btn>
+              <v-btn rounded color="grey darken-3" class="fadeIn fourth" to="/userpage">Login</v-btn>
               <v-btn rounded color="grey darken-3" class="fadeIn fourth" @click="step++">Register</v-btn>
               <v-spacer/>
             </v-card-actions>

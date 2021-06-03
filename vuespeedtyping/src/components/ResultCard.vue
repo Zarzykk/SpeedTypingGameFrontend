@@ -1,13 +1,13 @@
 <template>
-  <v-container class="d-flex align-items-stretch flex-wrap">
-
+  <v-container>
   </v-container>
 </template>
 
 <script>
 
 export default {
-name: "Result"
+  name: "ResultCard",
+  props: ["result"]
 }
 </script>
 

@@ -4,6 +4,7 @@ import Home from '../views/Home';
 import UserPage from '../views/UserPage'
 import Typing from "../views/Typing";
 import Result from "../views/Result";
+import Settings from "../views/Settings";
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ const routes = [
         path: '/results',
         name: 'Results',
         component: Result
+    },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: Settings
     }
 ]
 
