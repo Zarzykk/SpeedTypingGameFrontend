@@ -6,7 +6,7 @@
       <v-toolbar-title>Test your typing speed</v-toolbar-title>
       <v-spacer/>
     </v-app-bar>
-    <router-view class="mt-lg-16"></router-view>
+    <router-view></router-view>
     </div>
   </v-app>
 </template>
