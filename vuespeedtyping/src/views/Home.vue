@@ -39,7 +39,7 @@
                             :type="showPassword ? 'text' :'password'"
                             prepend-icon="mdi-lock"
                             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                            @click:append="showPassword =! showPassword" class="fadeIn third" outlined></v-text-field>
+                            @click:append="showPassword =! showPassword" class="fadeIn third" hint="At least 8 characters" outlined></v-text-field>
               <v-text-field label="Repeat password"
                             :type="showRepeatedPassword ? 'text' :'password'"
                             prepend-icon="mdi-lock"

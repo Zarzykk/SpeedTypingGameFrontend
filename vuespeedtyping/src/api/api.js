@@ -7,17 +7,29 @@ function sendRequest(address,endpoint,method,body,headers){
     return axios({
         method: method.toLowerCase(),
         url: address + endpoint,
-        headers,
+        headers: headers,
         data:body
     })
 }
 
-export function getAllUsers(){
+export function getUserResults(){
     return sendRequest(
         backendAddress,
-        'results',
+        'users/1/results',
         'get',
         {},
         {}
         )
+}
+
+
+export function getRandomText(){
+    return sendRequest(
+        backendAddress,
+        'texts',
+        'get',
+        {},
+        {}
+    )
+
 }

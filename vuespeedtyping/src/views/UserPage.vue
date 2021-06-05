@@ -3,17 +3,16 @@
   <v-content class="align-md-center mt-lg-16" >
       <v-row >
         <v-col cols="8" class="mx-auto">
-        <v-card app dark class="mt-lg-16 wrapper card-outter" height="60vh" >
+        <v-card app dark class="mt-lg-16 wrapper" height="45vh" >
+          <v-card-actions class="justify-lg-end"  >
+            <v-btn rounded small width="15%"  color="grey darken-3" to="/settings">Settings</v-btn>
+            <v-btn rounded small width="15%"  color="grey darken-3" to="/home">Log out</v-btn>
+          </v-card-actions>
           <v-card-actions class="justify-center">
             <v-btn rounded x-large width="60%" color="grey darken-3" class="mt-lg-16" to="/typing">Start typing</v-btn>
           </v-card-actions>
           <v-card-actions class="justify-center">
           <v-btn rounded x-large width="60%" color="grey darken-3" class="mt-lg-16" to="/results">Check your results</v-btn><br>
-          </v-card-actions>
-
-          <v-card-actions class="justify-lg-end"  >
-          <v-btn rounded small width="15%"  color="grey darken-3" to="/settings">Settings</v-btn>
-          <v-btn rounded small width="15%"  color="grey darken-3" to="/home">Log out</v-btn>
           </v-card-actions>
         </v-card>
         </v-col>
@@ -29,8 +28,4 @@ name: "UserPage"
 </script>
 
 <style scoped>
-.card-outter {
-  position: relative;
-  padding-bottom: 50px;
-}
 </style>
