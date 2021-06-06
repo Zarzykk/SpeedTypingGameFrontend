@@ -4,9 +4,13 @@
       <v-row >
         <v-col cols="8" class="mx-auto">
           <v-card app dark class="mt-lg-16 wrapper rounded-xl">
-            <v-card-title class="timer justify-center ma-md-8" :value="display"></v-card-title>
+            <v-card-title class="timer justify-center ma-md-8">{{timer}}</v-card-title>
 
-                <TextCard></TextCard>
+            <v-container>
+              <v-card color="grey darken-3" min-height="100px">
+                <v-card-text v-for="t in text" :key="t.id" class="white--text">{{ t.description }}</v-card-text>
+              </v-card>
+            </v-container>
 
             <v-card-actions>
             <v-textarea outlined class="mt-lg-16" id="quoteWrite">
@@ -22,24 +26,29 @@
 </template>
 
 <script>
-import TextCard from "../components/TextCard";
 
 
 export default {
   name: "Typing",
-  components: {TextCard},
-  methods:{
-    startTimer(){
-
-        setInterval(() =>{
-          this.getTimerTime()},1000
-        )
-    },
-    getTimerTime(){
-      return Math.floor((new Date()-this.startTime)/1000)
+  data(){
+    return {
+      timer:0,
     }
-
-  }
+  },
+  methods:{
+    countTime(){
+      if(this.timer <999) {
+        setTimeout(() => {
+          this.timer += 1
+          this.countTime()
+        }, 1000)
+      }
+    }
+  },
+mounted(){
+  this.text = this.$store.getters.getText;
+  this.countTime()
+}
 
 }
 </script>
