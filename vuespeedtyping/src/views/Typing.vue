@@ -7,15 +7,19 @@
             <v-card-title class="timer justify-center ma-md-8">{{timer}}</v-card-title>
 
             <v-container>
-              <v-card color="grey darken-3" min-height="100px">
-                <v-card-text v-for="t in text" :key="t.id" class="white--text">{{ t.description }}</v-card-text>
+              <v-card color="grey darken-2" min-height="100px" >
+                <v-card-text v-for="text in text" :key="text.id" class="white--text">{{ text.description }}</v-card-text>
               </v-card>
             </v-container>
 
-            <v-card-actions>
-            <v-textarea outlined class="mt-lg-16" id="quoteWrite">
+
+            <v-textarea outlined class="mt-lg-16 mx-5">
 
             </v-textarea>
+            <v-card-actions class="mx-5">
+              <v-btn rounded color="grey darken-3" @click="startTyping" v-if="!isHidden" v-on:click="isHidden = true"> Start</v-btn>
+              <v-spacer/>
+              <v-btn rounded color="grey darken-3" to="/userpage"> Back</v-btn>
           </v-card-actions>
 
           </v-card>
@@ -33,22 +37,27 @@ export default {
   data(){
     return {
       timer:0,
+      text:"",
+      isHidden:false,
     }
   },
   methods:{
-    countTime(){
+    startTyping(){
+      this.startTimer()
+      this.showText()
+    },
+    showText(){
+      this.text = this.$store.getters.getText;
+    },
+    startTimer(){
       if(this.timer <999) {
         setTimeout(() => {
           this.timer += 1
-          this.countTime()
+          this.startTimer()
         }, 1000)
       }
     }
-  },
-mounted(){
-  this.text = this.$store.getters.getText;
-  this.countTime()
-}
+  }
 
 }
 </script>
