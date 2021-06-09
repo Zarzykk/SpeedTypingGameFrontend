@@ -9,12 +9,13 @@
             <v-divider/>
 
             <v-card-text>
-              <v-text-field label="E-mail" prepend-icon="mdi-account-circle" class="fadeIn second" outlined></v-text-field>
+              <v-text-field label="E-mail" prepend-icon="mdi-account-circle" :rules="emailRules"
+                            class="fadeIn second" outlined></v-text-field>
               <v-text-field label="Password"
-                            :type="showPassword ? 'text' :'password'"
-                            prepend-icon="mdi-lock"
+                            :type="showPassword ? 'text' :'password'" prepend-icon="mdi-lock"
                             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                            @click:append="showPassword =! showPassword" class="fadeIn third" outlined></v-text-field>
+                            @click:append="showPassword =! showPassword"
+                            class="fadeIn third" outlined :rules="passwordRules"></v-text-field>
             </v-card-text>
 
             <v-divider/>
@@ -34,17 +35,18 @@
             <v-divider/>
 
             <v-card-text>
-              <v-text-field label="E-mail" prepend-icon="mdi-account-circle" class="fadeIn second" outlined></v-text-field>
-              <v-text-field label="Password"
-                            :type="showPassword ? 'text' :'password'"
-                            prepend-icon="mdi-lock"
-                            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                            @click:append="showPassword =! showPassword" class="fadeIn third" hint="At least 8 characters" outlined></v-text-field>
-              <v-text-field label="Repeat password"
-                            :type="showRepeatedPassword ? 'text' :'password'"
-                            prepend-icon="mdi-lock"
-                            :append-icon="showRepeatedPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                            @click:append="showRepeatedPassword =! showRepeatedPassword" class="fadeIn third" outlined></v-text-field>
+              <v-text-field label="E-mail" prepend-icon="mdi-account-circle" :rules="emailRules"
+                            class="fadeIn second" outlined v-model="registerEmail">
+              </v-text-field>
+              <v-text-field
+                  label="Password" :type="showPassword ? 'text' :'password'" prepend-icon="mdi-lock"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword =! showPassword"
+                  class="fadeIn third" outlined v-model="registerPassword" :rules="passwordRegisterRules">
+              </v-text-field>
+              <v-text-field label="Repeat password" :type="showRepeatedPassword ? 'text' :'password'"
+                            prepend-icon="mdi-lock" :append-icon="showRepeatedPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                            @click:append="showRepeatedPassword =! showRepeatedPassword"
+                            class="fadeIn third" outlined v-model="repeatRegisterPassword" :rules="[passwordRegisterRules,passwordMatch]"></v-text-field>
             </v-card-text>
 
             <v-divider/>
@@ -52,10 +54,23 @@
 
             <v-card-actions >
               <v-spacer/>
-              <v-btn rounded color="grey darken-3" class="fadeIn fourth" @click="step--">Register</v-btn>
+              <v-btn rounded color="grey darken-3"
+                     :loading="loading"
+                     class="fadeIn fourth"
+                     @click="registerNewUser(registerEmail,registerPassword)"
+              >Register</v-btn>
               <v-btn rounded color="grey darken-3" class="fadeIn fourth" @click="step--">Back</v-btn>
               <v-spacer/>
             </v-card-actions>
+
+            <v-dialog v-model="register" max-width="600px" min-width="360px">
+              <v-alert v-if="registerSuccess" type="success">
+                Rejestracja udana!
+              </v-alert>
+              <v-alert v-if="!registerSuccess" type="error">
+                Błąd. Rejestracja nieudana!
+              </v-alert>
+            </v-dialog>
 
           </v-window-item>
 
@@ -67,8 +82,6 @@
 
 
 <style scoped>
-
-
 .fadeInDown {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
@@ -161,12 +174,51 @@
 </style>
 
 <script>
+import {registerUser} from "../api/api";
+
 export default {
   data:() =>{
     return{
+      register: false,
+      registerSuccess: false,
       step:1,
       showPassword:false,
-      showRepeatedPassword : false
+      showRepeatedPassword : false,
+      repeatRegisterPassword:'',
+      registerPassword:'',
+      registerEmail:'',
+      loading: false,
+      emailRules:[
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      passwordRules:[
+        v => !!v || 'Password is required',
+      ],
+      passwordRegisterRules:[
+        v => !!v || 'Password is required',
+        v => (v && v.length >=8) || 'At least 8 characters'
+      ]
+    }
+  },
+  computed: {
+    passwordMatch() {
+      return () => this.registerPassword === this.repeatRegisterPassword || 'Password must match'
+    },
+  },
+  methods:{
+    registerNewUser(){
+      registerUser(this.registerEmail,this.registerPassword)
+      .then(()=>{
+        this.loading = false;
+        this.register = true;
+        this.registerSuccess = true
+      }).catch(()=>{
+        this.loading = false
+        this.register = true
+        this.registerSuccess = false
+      })
+      this.loading = true
     }
   }
 }

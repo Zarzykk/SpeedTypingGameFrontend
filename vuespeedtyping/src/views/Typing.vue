@@ -36,7 +36,7 @@
                     <v-card-subtitle class="subtitle fadeIn fourth">Accuracy:</v-card-subtitle>
                     <v-card-text class="white--text results fadeIn fourth">{{accuracy}}</v-card-text>
                     <v-card-actions  class="justify-center fadeIn fourth">
-                      <v-btn rounded x-large width="60%" color="grey darken-3" to="/userpage" >Back to userpage</v-btn>
+                      <v-btn rounded x-large width="60%" color="grey darken-3" to="/userpage">Back to userpage</v-btn>
                     </v-card-actions>
                 </v-container>
               </v-window-item>
@@ -50,6 +50,8 @@
 
 <script>
 
+
+import axios from "axios";
 
 export default {
   name: "Typing",
@@ -89,12 +91,12 @@ export default {
         this.calculateWPM()
         this.calculateAccuracy()
         this.step++;
+        this.addResult();
       }
     },
     calculateAccuracy(){
       this.accuracy = this.correctChars/(this.correctChars+this.mistakes)*100
       this.accuracy = this.accuracy.toFixed(2)
-      this.accuracy = this.accuracy +"%"
     },
     calculateWPM(){
       this.WPM=((this.correctChars + this.mistakes)/5)/(this.stopTimer/60)
@@ -130,6 +132,17 @@ export default {
           this.startTimer()
         }, 1000)
       }
+    },async addResult(){
+      const saveResult = await axios.post("http://localhost:3000/api/users/1/results",
+          {
+            "time":this.stopTimer,
+            "wpm":this.WPM,
+            "accuracy":this.accuracy,
+            "text_id":this.text[0].id,
+            "user_id":1
+          });
+      console.log("test czy dziala")
+    console.log(saveResult)
     }
   }
 

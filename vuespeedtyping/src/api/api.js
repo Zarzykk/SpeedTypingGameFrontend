@@ -31,5 +31,14 @@ export function getRandomText(){
         {},
         {}
     )
+}
 
+export function registerUser(email,password){
+    return sendRequest(
+        backendAddress,
+        'register',
+        'post',
+        {email,password},
+        {}
+    )
 }
