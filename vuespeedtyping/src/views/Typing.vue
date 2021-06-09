@@ -122,8 +122,10 @@ export default {
           this.isGameOver()
     },
     showText(){
+      console.log(this.$store.getters.getText)
       this.text = this.$store.getters.getText
       this.chars = this.text[0].description
+      console.log(this.text[0].id)
     },
     startTimer(){
       if(!this.gameOver) {
@@ -133,15 +135,16 @@ export default {
         }, 1000)
       }
     },async addResult(){
-      const saveResult = await axios.post("http://localhost:3000/api/users/1/results",
+      const saveResult = await axios.post("http://localhost:3000/api/users/" +
+          this.$store.getters.getLoggedId +
+          "/results",
           {
             "time":this.stopTimer,
             "wpm":this.WPM,
             "accuracy":this.accuracy,
             "text_id":this.text[0].id,
-            "user_id":1
+            "user_id":this.$store.getters.getLoggedId
           });
-      console.log("test czy dziala")
     console.log(saveResult)
     }
   }

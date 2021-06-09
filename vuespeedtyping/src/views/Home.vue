@@ -9,9 +9,9 @@
             <v-divider/>
 
             <v-card-text>
-              <v-text-field label="E-mail" prepend-icon="mdi-account-circle" :rules="emailRules"
+              <v-text-field label="E-mail" prepend-icon="mdi-account-circle" :rules="emailRules" v-model="loginEmail"
                             class="fadeIn second" outlined></v-text-field>
-              <v-text-field label="Password"
+              <v-text-field label="Password" v-model="loginPassword"
                             :type="showPassword ? 'text' :'password'" prepend-icon="mdi-lock"
                             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                             @click:append="showPassword =! showPassword"
@@ -23,7 +23,7 @@
 
             <v-card-actions >
               <v-spacer/>
-              <v-btn rounded color="grey darken-3" class="fadeIn fourth" to="/userpage">Login</v-btn>
+              <v-btn rounded color="grey darken-3" class="fadeIn fourth" @click="loginUser">Login</v-btn>
               <v-btn rounded color="grey darken-3" class="fadeIn fourth" @click="step++">Register</v-btn>
               <v-spacer/>
             </v-card-actions>
@@ -174,7 +174,7 @@
 </style>
 
 <script>
-import {registerUser} from "../api/api";
+import {registerUser,loginUser} from "../api/api";
 
 export default {
   data:() =>{
@@ -188,6 +188,8 @@ export default {
       registerPassword:'',
       registerEmail:'',
       loading: false,
+      loginEmail:'',
+      loginPassword:'',
       emailRules:[
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -219,6 +221,16 @@ export default {
         this.registerSuccess = false
       })
       this.loading = true
+    },
+    loginUser(){
+        loginUser(this.loginEmail,this.loginPassword)
+      .then((res) =>{
+        localStorage.setItem('auth-token', res.data.token)
+        localStorage.setItem('id',res.data.id)
+        this.$store.commit('setToken', res.data.token)
+        // this.$store.commit('setLoggedId', localStorage.getItem('id'))
+        this.$router.replace('/userpage')
+      }).catch(error => alert(error.response.data))
     }
   }
 }

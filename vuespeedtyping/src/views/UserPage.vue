@@ -5,14 +5,13 @@
         <v-col cols="8" class="mx-auto fadeIn">
         <v-card app dark class="mt-lg-16 wrapper" height="45vh" >
           <v-card-actions class="fadeIn second"  >
-            <v-btn rounded small width="15%"  color="grey darken-3" to="/home">Log out</v-btn>
-            <v-btn rounded small width="15%"  color="grey darken-3" to="/settings">Settings</v-btn>
+            <v-btn rounded small width="15%"  color="grey darken-3" @click="logOutUser">Log out</v-btn>
           </v-card-actions>
           <v-card-actions class="justify-center fadeIn third">
             <v-btn rounded x-large width="60%" color="grey darken-3" class="mt-lg-16" to="/typing">Start typing</v-btn>
           </v-card-actions>
           <v-card-actions class="justify-center fadeIn fourth">
-          <v-btn rounded x-large width="60%" color="grey darken-3" class="mt-lg-16" to="/results">Check your results</v-btn><br>
+          <v-btn rounded x-large width="60%" color="grey darken-3" class="mt-lg-16" @click="loadResults">Check your results</v-btn><br>
           </v-card-actions>
         </v-card>
         </v-col>
@@ -23,7 +22,17 @@
 
 <script>
 export default {
-name: "UserPage"
+name: "UserPage",
+  methods:{
+  logOutUser(){
+    localStorage.clear()
+    this.$router.replace("/")
+    this.$store.commit("setToken", "")
+    this.$store.commit("setLoggedId", "")
+  },loadResults(){
+
+    }
+  }
 }
 </script>
 

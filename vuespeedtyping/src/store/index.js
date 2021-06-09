@@ -7,7 +7,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
         results:[],
-        text: {}
+        text: {},
+        authToken:'',
+        loggedId:''
     },
     mutations:{
         setResults(state,results){
@@ -15,6 +17,12 @@ export default new Vuex.Store({
         },
         setText(state,text){
             state.text=text;
+        },
+        setToken(state, token){
+            state.authToken = token
+        },
+        setLoggedId(state,id){
+            state.loggedId=id;
         }
     },
     actions:{
@@ -36,6 +44,14 @@ export default new Vuex.Store({
         },
         getText(state){
             return state.text
+        },
+        getToken(state){
+            if (!state.authToken)
+                return state.authToken
+            else return false
+        },
+        getLoggedId(state){
+            return state.loggedId;
         }
     }
 })

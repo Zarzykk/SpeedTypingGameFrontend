@@ -27,6 +27,8 @@ export default {
   mounted() {
     this.$store.dispatch('fetchResults').catch(error=>alert(error.response.data))
     this.$store.dispatch('fetchText').catch(error=>alert(error.response.data))
+    this.$store.commit('setToken', localStorage.getItem('auth-token'))
+    this.$store.commit('setLoggedId',localStorage.getItem('id'))
   }
 };
 </script>

@@ -13,12 +13,14 @@ function sendRequest(address,endpoint,method,body,headers){
 }
 
 export function getUserResults(){
-    return sendRequest(
-        backendAddress,
-        'users/1/results',
-        'get',
-        {},
-        {}
+        return sendRequest(
+            backendAddress,
+            'users/' +
+            3
+            + '/results',
+            'get',
+            {},
+            {}
         )
 }
 
@@ -37,6 +39,16 @@ export function registerUser(email,password){
     return sendRequest(
         backendAddress,
         'register',
+        'post',
+        {email,password},
+        {}
+    )
+}
+
+export function loginUser(email,password){
+    return sendRequest(
+        backendAddress,
+        'login',
         'post',
         {email,password},
         {}
