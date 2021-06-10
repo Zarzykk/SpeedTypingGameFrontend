@@ -16,7 +16,7 @@ export function getUserResults(){
         return sendRequest(
             backendAddress,
             'users/' +
-            3
+            localStorage.getItem('id')
             + '/results',
             'get',
             {},

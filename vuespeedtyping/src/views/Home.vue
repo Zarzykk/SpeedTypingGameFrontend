@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-content class="align-md-center mt-lg-16 " >
+    <v-main class="align-md-center mt-lg-16 " >
       <v-card app dark width="35%" class="mx-auto mt-lg-16 wrapper fadeInDown">
         <v-window v-model="step">
           <v-window-item :value="1">
@@ -65,10 +65,10 @@
 
             <v-dialog v-model="register" max-width="600px" min-width="360px">
               <v-alert v-if="registerSuccess" type="success">
-                Rejestracja udana!
+                Registration successful!
               </v-alert>
               <v-alert v-if="!registerSuccess" type="error">
-                Błąd. Rejestracja nieudana!
+                Error. Registration unsuccessful!
               </v-alert>
             </v-dialog>
 
@@ -76,7 +76,7 @@
 
         </v-window>
       </v-card>
-    </v-content>
+    </v-main>
   </v-container>
 </template>
 
@@ -228,9 +228,10 @@ export default {
         localStorage.setItem('auth-token', res.data.token)
         localStorage.setItem('id',res.data.id)
         this.$store.commit('setToken', res.data.token)
-        // this.$store.commit('setLoggedId', localStorage.getItem('id'))
-        this.$router.replace('/userpage')
+        this.$store.commit('setLoggedId', localStorage.getItem('id'))
       }).catch(error => alert(error.response.data))
+      if(localStorage.getItem('auth-token')!=="")
+        this.$router.replace('/userpage')
     }
   }
 }

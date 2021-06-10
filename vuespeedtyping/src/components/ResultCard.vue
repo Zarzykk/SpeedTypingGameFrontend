@@ -1,10 +1,14 @@
 <template>
   <v-container>
-    <v-card color="grey darken-3" style="min-height: 220px;min-width: 250px" class="fadeIn">
-      <v-card-text class="white--text fadeIn">Text: {{ result.description }}</v-card-text>
-      <v-card-text class="white--text fadeIn second">Accuracy: {{ result.accuracy }}</v-card-text>
-      <v-card-text class="white--text fadeIn third">Time: {{ result.time }}</v-card-text>
-      <v-card-text class="white--text fadeIn fourth">WPM:{{ result.wpm}}</v-card-text>
+    <v-card dark class="fadeIn">
+      <v-card-subtitle class="subtitle fadeIn">Text:</v-card-subtitle>
+      <v-card-text class="white--text results fadeIn">{{ result.description }}</v-card-text>
+      <v-card-subtitle class="subtitle fadeIn second">WPM:</v-card-subtitle>
+      <v-card-text class="white--text results fadeIn second">{{ result.wpm}}</v-card-text>
+      <v-card-subtitle class="subtitle fadeIn third">Time:</v-card-subtitle>
+      <v-card-text class="white--text results fadeIn third">{{ result.time }}</v-card-text>
+      <v-card-subtitle class="subtitle fadeIn fourth">Accuracy:</v-card-subtitle>
+      <v-card-text class="white--text results fadeIn fourth">{{ result.accuracy }}</v-card-text>
     </v-card>
   </v-container>
 </template>
@@ -18,6 +22,13 @@ export default {
 </script>
 
 <style scoped>
+.subtitle{
+  font-size: 1rem;
+}
+.results{
+  font-size:0.9rem;
+}
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;

@@ -1,6 +1,6 @@
 <template>
 <v-container>
-  <v-content class="align-md-center mt-lg-16 fadeInDown" >
+  <v-main class="align-md-center mt-lg-16 fadeInDown" >
       <v-row >
         <v-col cols="8" class="mx-auto fadeIn">
         <v-card app dark class="mt-lg-16 wrapper" height="45vh" >
@@ -8,7 +8,7 @@
             <v-btn rounded small width="15%"  color="grey darken-3" @click="logOutUser">Log out</v-btn>
           </v-card-actions>
           <v-card-actions class="justify-center fadeIn third">
-            <v-btn rounded x-large width="60%" color="grey darken-3" class="mt-lg-16" to="/typing">Start typing</v-btn>
+            <v-btn rounded x-large width="60%" color="grey darken-3" class="mt-lg-16" @click="startTyping">Start typing</v-btn>
           </v-card-actions>
           <v-card-actions class="justify-center fadeIn fourth">
           <v-btn rounded x-large width="60%" color="grey darken-3" class="mt-lg-16" @click="loadResults">Check your results</v-btn><br>
@@ -16,7 +16,7 @@
         </v-card>
         </v-col>
       </v-row>
-  </v-content>
+  </v-main>
 </v-container>
 </template>
 
@@ -30,7 +30,11 @@ name: "UserPage",
     this.$store.commit("setToken", "")
     this.$store.commit("setLoggedId", "")
   },loadResults(){
-
+      this.$router.replace("/results")
+    },
+    startTyping(){
+      this.$router.replace("/typing")
+      this.$store.dispatch('fetchText').catch(error=>alert(error.response.data))
     }
   }
 }

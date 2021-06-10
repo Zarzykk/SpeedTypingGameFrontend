@@ -14,7 +14,10 @@
 <style>
   #app {
     background-image: url("./assets/background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
+
 
 
 </style>
@@ -25,8 +28,6 @@ export default {
   data: () => ({
   }),
   mounted() {
-    this.$store.dispatch('fetchResults').catch(error=>alert(error.response.data))
-    this.$store.dispatch('fetchText').catch(error=>alert(error.response.data))
     this.$store.commit('setToken', localStorage.getItem('auth-token'))
     this.$store.commit('setLoggedId',localStorage.getItem('id'))
   }

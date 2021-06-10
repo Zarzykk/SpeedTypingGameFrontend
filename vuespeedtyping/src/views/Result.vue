@@ -26,6 +26,8 @@ export default {
     results() {
       return this.$store.getters.getResults;
     }
+  },mounted() {
+    this.$store.dispatch('fetchResults').catch(error=>alert(error.response.data))
   }
 }
 </script>

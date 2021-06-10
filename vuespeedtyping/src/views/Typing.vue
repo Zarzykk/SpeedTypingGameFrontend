@@ -15,7 +15,7 @@
             </v-container>
 
 
-            <v-textarea :maxlength="textLength" outlined class="mt-lg-16 mx-5 fadeIn third"
+            <v-textarea :maxlength="textLength" outlined class="mt-lg-16 mx-5 fadeIn third" :class="correct ? 'green--text' : 'red--text'"
                         v-model="inputValue" @keypress="checkCharacter" :disabled="gameOver ">
 
             </v-textarea>
@@ -71,7 +71,8 @@ export default {
       WPM:0,
       correctChars:0,
       accuracy:0,
-      mistake:false
+      mistake:false,
+      correct:true,
     }
   },
   methods:{
@@ -112,20 +113,21 @@ export default {
         if (this.chars[currentIndex] === inputChar) {
           this.typedWords[currentIndex] = "correct";
           this.mistake = false
+          this.correct=true;
         }
         else {
+
           this.typedWords[currentIndex] = "incorrect";
           this.mistake = true
+          this.correct=false;
           this.mistakes++;
         }
       if(currentIndex===this.chars.length-1)
           this.isGameOver()
     },
     showText(){
-      console.log(this.$store.getters.getText)
       this.text = this.$store.getters.getText
       this.chars = this.text[0].description
-      console.log(this.text[0].id)
     },
     startTimer(){
       if(!this.gameOver) {
@@ -136,7 +138,7 @@ export default {
       }
     },async addResult(){
       const saveResult = await axios.post("http://localhost:3000/api/users/" +
-          this.$store.getters.getLoggedId +
+          localStorage.getItem('id') +
           "/results",
           {
             "time":this.stopTimer,
