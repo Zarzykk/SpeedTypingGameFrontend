@@ -6,7 +6,9 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="4" v-for="result in results" :key="result.id">
+      <v-col cols="6" sm="8"
+             md="6"
+             lg="4" v-for="result in results" :key="result.id">
        <ResultCard :result="result"></ResultCard>
       </v-col>
     </v-row>

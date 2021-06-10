@@ -7,7 +7,7 @@
             <v-card-title class="justify-center fadeIn ">Log in</v-card-title>
 
             <v-divider/>
-
+            <v-form ref="loginForm" v-model="valid" lazy-validation>
             <v-card-text>
               <v-text-field label="E-mail" prepend-icon="mdi-account-circle" :rules="emailRules" v-model="loginEmail"
                             class="fadeIn second" outlined></v-text-field>
@@ -23,17 +23,18 @@
 
             <v-card-actions >
               <v-spacer/>
-              <v-btn rounded color="grey darken-3" class="fadeIn fourth" @click="loginUser">Login</v-btn>
+              <v-btn rounded color="grey darken-3" class="fadeIn fourth" @click="loginUser" :disabled="!valid">Login</v-btn>
               <v-btn rounded color="grey darken-3" class="fadeIn fourth" @click="step++">Register</v-btn>
               <v-spacer/>
             </v-card-actions>
+            </v-form>
           </v-window-item>
           <v-window-item :value="2">
 
             <v-card-title class="justify-center fadeIn ">Register</v-card-title>
 
             <v-divider/>
-
+            <v-form ref="registerForm" v-model="valid" lazy-validation>
             <v-card-text>
               <v-text-field label="E-mail" prepend-icon="mdi-account-circle" :rules="emailRules"
                             class="fadeIn second" outlined v-model="registerEmail">
@@ -48,22 +49,20 @@
                             @click:append="showRepeatedPassword =! showRepeatedPassword"
                             class="fadeIn third" outlined v-model="repeatRegisterPassword" :rules="[passwordRegisterRules,passwordMatch]"></v-text-field>
             </v-card-text>
-
             <v-divider/>
-
-
             <v-card-actions >
               <v-spacer/>
               <v-btn rounded color="grey darken-3"
                      :loading="loading"
+                     :disabled="!valid"
                      class="fadeIn fourth"
                      @click="registerNewUser(registerEmail,registerPassword)"
               >Register</v-btn>
               <v-btn rounded color="grey darken-3" class="fadeIn fourth" @click="step--">Back</v-btn>
               <v-spacer/>
             </v-card-actions>
-
-            <v-dialog v-model="register" max-width="600px" min-width="360px">
+            </v-form>
+            <v-dialog v-model="register" max-width="330px">
               <v-alert v-if="registerSuccess" type="success">
                 Registration successful!
               </v-alert>
@@ -190,6 +189,7 @@ export default {
       loading: false,
       loginEmail:'',
       loginPassword:'',
+      valid:true,
       emailRules:[
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -229,9 +229,8 @@ export default {
         localStorage.setItem('id',res.data.id)
         this.$store.commit('setToken', res.data.token)
         this.$store.commit('setLoggedId', localStorage.getItem('id'))
-      }).catch(error => alert(error.response.data))
-      if(localStorage.getItem('auth-token')!=="")
         this.$router.replace('/userpage')
+      }).catch(error => alert(error.response.data))
     }
   }
 }

@@ -20,8 +20,9 @@
 
             </v-textarea>
             <v-card-actions class="mx-5 justify-center fadeIn fourth" >
-              <v-btn rounded x-large width="60%" color="grey darken-3" @click="startTyping"
+              <v-btn rounded x-large width="30%" color="grey darken-3" @click="startTyping"
                      v-if="!isHidden" v-on:click="isHidden = true"> Start</v-btn>
+              <v-btn rounded x-large width="30%" color="grey darken-3" to="/userpage"> back</v-btn>
           </v-card-actions>
               </v-window-item>
 

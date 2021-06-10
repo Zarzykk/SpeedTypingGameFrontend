@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card dark class="fadeIn">
+    <v-card dark min-height="500px" class="fadeIn">
       <v-card-subtitle class="subtitle fadeIn">Text:</v-card-subtitle>
       <v-card-text class="white--text results fadeIn">{{ result.description }}</v-card-text>
       <v-card-subtitle class="subtitle fadeIn second">WPM:</v-card-subtitle>
